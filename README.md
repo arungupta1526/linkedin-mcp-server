@@ -23,12 +23,12 @@ An MCP server that lets AI assistants like Claude read LinkedIn data through you
 |------|-------------|--------|
 | `get_person_profile` | Get profile info with explicit section selection (experience, education, interests, honors, languages, certifications, skills, projects, contact_info, posts) | working |
 | `get_my_profile` | Get the authenticated user's own LinkedIn profile (same sections as get_person_profile) | working |
-| `connect_with_person` | Send a connection request or accept an incoming one, with optional note | [#407](https://github.com/stickerdaniel/linkedin-mcp-server/issues/407) [#432](https://github.com/stickerdaniel/linkedin-mcp-server/issues/432) [#448](https://github.com/stickerdaniel/linkedin-mcp-server/issues/448) [#454](https://github.com/stickerdaniel/linkedin-mcp-server/issues/454) |
+| `connect_with_person` | Send a connection request or accept an incoming one, with optional note | [#407](https://github.com/stickerdaniel/linkedin-mcp-server/issues/407) [#432](https://github.com/stickerdaniel/linkedin-mcp-server/issues/432) [#454](https://github.com/stickerdaniel/linkedin-mcp-server/issues/454) |
 | `get_sidebar_profiles` | Extract profile URLs from sidebar recommendation sections ("More profiles for you", "Explore premium profiles", "People you may know") on a profile page | working |
 | `get_inbox` | List recent conversations from the LinkedIn messaging inbox | working |
-| `get_conversation` | Read a specific messaging conversation by username or thread ID | [#442](https://github.com/stickerdaniel/linkedin-mcp-server/issues/442) |
+| `get_conversation` | Read a specific messaging conversation by username or thread ID | working |
 | `search_conversations` | Search messages by keyword | working |
-| `send_message` | Send a message to a LinkedIn user (requires confirmation) | [#433](https://github.com/stickerdaniel/linkedin-mcp-server/issues/433) [#441](https://github.com/stickerdaniel/linkedin-mcp-server/issues/441) |
+| `send_message` | Send a message to a LinkedIn user (requires confirmation) | [#433](https://github.com/stickerdaniel/linkedin-mcp-server/issues/433) [#441](https://github.com/stickerdaniel/linkedin-mcp-server/issues/441) [#483](https://github.com/stickerdaniel/linkedin-mcp-server/issues/483) |
 | `get_company_profile` | Extract company information with explicit section selection (posts, jobs); about-section references may include a `company_urn` entry carrying the numeric id used by LinkedIn's people-search `currentCompany` URL facet | working |
 | `get_company_posts` | Get recent posts from a company's LinkedIn feed | working |
 | `search_companies` | Search for companies on LinkedIn by keywords | working |
@@ -61,9 +61,6 @@ An MCP server that lets AI assistants like Claude read LinkedIn data through you
   }
 }
 ```
-
-> [!NOTE]
-> Previously published as `linkedin-scraper-mcp`. Configs using the old package name keep working through a transitional package that forwards to this one; switch to `mcp-server-linkedin` to use the new name directly.
 
 The `@latest` tag ensures you always run the newest version — `uvx` checks PyPI on each client launch and updates automatically. The server starts quickly, prepares the shared Patchright Chromium browser cache in the background under `~/.linkedin-mcp/patchright-browsers`, and opens a LinkedIn login browser window on the first tool call that needs authentication.
 
