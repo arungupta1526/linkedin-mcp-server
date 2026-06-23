@@ -425,6 +425,27 @@ class TestLoaders:
         config = load_from_args(AppConfig())
         assert config.browser.eager_full_chromium is True
 
+    def test_load_from_args_no_eager_full_chromium(self, monkeypatch):
+        monkeypatch.setattr(
+            "sys.argv", ["linkedin-mcp-server", "--no-eager-full-chromium"]
+        )
+        from linkedin_mcp_server.config.loaders import load_from_args
+
+        config = AppConfig()
+        config.browser.eager_full_chromium = True
+        config = load_from_args(config)
+        assert config.browser.eager_full_chromium is False
+
+    def test_no_eager_flag_overrides_env_true(self, monkeypatch):
+        monkeypatch.setenv("EAGER_FULL_CHROMIUM", "true")
+        monkeypatch.setattr(
+            "sys.argv", ["linkedin-mcp-server", "--no-eager-full-chromium"]
+        )
+        from linkedin_mcp_server.config import load_config
+
+        config = load_config()
+        assert config.browser.eager_full_chromium is False
+
     def test_eager_full_chromium_absent_keeps_default(self, monkeypatch):
         monkeypatch.delenv("EAGER_FULL_CHROMIUM", raising=False)
         monkeypatch.setattr("sys.argv", ["linkedin-mcp-server"])

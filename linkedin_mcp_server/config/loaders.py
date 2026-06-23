@@ -432,14 +432,26 @@ def load_from_args(config: AppConfig) -> AppConfig:
         ),
     )
 
-    parser.add_argument(
+    eager_full_group = parser.add_mutually_exclusive_group()
+    eager_full_group.add_argument(
         "--eager-full-chromium",
+        dest="eager_full_chromium",
         action="store_true",
         default=None,
         help=(
             "Install full Chrome for Testing up front during browser setup "
             "instead of lazily on the first headed login (pre-warms the headed "
             "login fallback at the cost of a larger initial download)"
+        ),
+    )
+    eager_full_group.add_argument(
+        "--no-eager-full-chromium",
+        dest="eager_full_chromium",
+        action="store_false",
+        default=None,
+        help=(
+            "Install full Chrome for Testing lazily on the first headed login "
+            "(default; overrides EAGER_FULL_CHROMIUM=true)."
         ),
     )
 
@@ -518,8 +530,8 @@ def load_from_args(config: AppConfig) -> AppConfig:
     if args.auto_import is not None:
         config.browser.auto_import_from_browser = args.auto_import
 
-    if args.eager_full_chromium:
-        config.browser.eager_full_chromium = True
+    if args.eager_full_chromium is not None:
+        config.browser.eager_full_chromium = args.eager_full_chromium
 
     return config
 
